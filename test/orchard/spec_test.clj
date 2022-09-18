@@ -1,6 +1,7 @@
 (ns orchard.spec-test
   (:require
    [clojure.test :refer [deftest is testing]]
+   [orchard.misc :as misc]
    [orchard.spec :as spec]))
 
 (deftest normalize-spec-form-test
@@ -21,10 +22,7 @@
              :ret (clojure.core/fn [%] (clojure.core/> (:start %) (:end %)))
              :fn nil)))))
 
-(def spec-available? (or (resolve (symbol "clojure.spec.alpha" "get-spec"))
-                         (resolve (symbol "clojure.spec" "get-spec"))))
-
-(when spec-available?
+(when misc/spec-any?
   (deftest spec-is-found-by-ns-alias
     (testing "current ns keyword"
       (testing "spec-list finds current ns keyword"
